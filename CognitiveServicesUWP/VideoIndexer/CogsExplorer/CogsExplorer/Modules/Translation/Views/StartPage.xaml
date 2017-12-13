@@ -1,0 +1,247 @@
+﻿<Page
+    x:Class="CogsExplorer.Modules.Translation.Views.StartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CogsExplorer.Modules.Translation.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Clear" Icon="Undo" Command="{Binding ClearContentCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TitleRow" Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="Translation"
+                x:Name="wideTitleLabel"
+                Style="{StaticResource PageTitleStyle}" />
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="TRANSLATION"
+                x:Name="narrowTitleLabel"
+                Style="{StaticResource SmallPageTitleStyle}" />
+
+        <Grid x:Name="mainGrid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment="Left" Margin="0" Text="Use Translation to experiment with the Translator Text and Translator Speech APIs." Style="{ThemeResource BodyTextStyle}"/>
+
+            <Pivot Grid.Row="1">
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="text translation"/>
+                    </PivotItem.Header>
+                    <Grid VerticalAlignment="Top" Margin="20" HorizontalAlignment="Left" Width="300">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBox FontWeight="SemiLight" HorizontalAlignment="Stretch" Height="120" AcceptsReturn="True" Text="{Binding CurrentTextContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.Header>
+                                <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Enter text to translate:"/>
+                            </TextBox.Header>
+                        </TextBox>
+
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <ComboBox VerticalAlignment="Center" HorizontalAlignment="Left" Width="270" Margin="0,10"  DataContext="{Binding}" ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
+                                <ComboBox.Header>
+                                    <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select a language:"/>
+                                </ComboBox.Header>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Light" Text="{Binding DisplayName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <Button FontSize="24" IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanToDisabledConverter}}" Margin="0,0,0,10" VerticalAlignment="Bottom" Command="{Binding TranslateTextCommand}" Content="" FontFamily="{ThemeResource SymbolThemeFontFamily}" Style="{ThemeResource CleanButtonStyle}"/>
+
+                        </StackPanel>
+                        <TextBlock Grid.Row="2" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select a translation:"/>
+                        <ListView Grid.Row="3" Background="Transparent" Height="200" BorderBrush="#FF999999" BorderThickness="2" DataContext="{Binding}" ItemsSource="{Binding Translations}" SelectedItem="{Binding SelectedTranslation, Mode=TwoWay}">
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ToolTipService.ToolTip="{Binding Converter={StaticResource TranslationLanguageLabelConverter}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="240"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="{Binding TranslatedContent}" TextWrapping="Wrap"/>
+                                        <Button FontSize="18" VerticalAlignment="Center" Margin="0,10" Grid.Column="1" HorizontalAlignment="Right" IsEnabled="{Binding TranslatedLanguage.SupportsSpeech}" Command="{Binding TranslateTextToSpeechCommand}" Content="" FontFamily="{ThemeResource SymbolThemeFontFamily}" Style="{ThemeResource CleanButtonStyle}"/>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+
+
+                    </Grid>
+
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="speech translation"/>
+                    </PivotItem.Header>
+                    <Grid VerticalAlignment="Top" Margin="20" HorizontalAlignment="Left" Width="300">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <ComboBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="270" Margin="0,10"  DataContext="{Binding}" ItemsSource="{Binding AvailableMicrophones}" SelectedItem="{Binding SelectedMicrophone, Mode=TwoWay}">
+                            <ComboBox.Header>
+                                <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select a microphone:"/>
+                            </ComboBox.Header>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Light" Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <ComboBox Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="270" Margin="0,10"  DataContext="{Binding}" ItemsSource="{Binding AvailableSpeakers}" SelectedItem="{Binding SelectedSpeaker, Mode=TwoWay}">
+                            <ComboBox.Header>
+                                <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select a speaker:"/>
+                            </ComboBox.Header>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Light" Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+
+                        <ComboBox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="270" Margin="0,10"  DataContext="{Binding}" ItemsSource="{Binding AvailableSpeechLanguages.SpeechLanguages}" SelectedItem="{Binding SelectedSpeechLanguage, Mode=TwoWay}">
+                            <ComboBox.Header>
+                                <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select spoken language:"/>
+                            </ComboBox.Header>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Light" Text="{Binding DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <ComboBox Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="270" Margin="0,10"  DataContext="{Binding}" ItemsSource="{Binding AvailableSpeechLanguages.TextLanguages}" SelectedItem="{Binding SelectedTextLanguage, Mode=TwoWay}">
+                            <ComboBox.Header>
+                                <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select translation language:"/>
+                            </ComboBox.Header>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Light" Text="{Binding DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <ComboBox Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Left" Width="270" Margin="0,10"  DataContext="{Binding}" ItemsSource="{Binding SelectedTextLanguage.Voices}" SelectedItem="{Binding SelectedSpeechVoice, Mode=TwoWay}">
+                            <ComboBox.Header>
+                                <TextBlock Margin="0,0,0,-8" Style="{ThemeResource CaptionTextBlockStyle}" Text="Select a voice:"/>
+                            </ComboBox.Header>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Light" Text="{Binding DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="6" Style="{ThemeResource CaptionTextBlockStyle}" Text="Real-time translations:"/>
+                        <ListView Grid.Row="7" Background="Transparent" Height="200" BorderBrush="#FF999999" BorderThickness="2" DataContext="{Binding}" ItemsSource="{Binding SpeechClient.Results}">
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock VerticalAlignment="Center" FontWeight="SemiLight" Text="{Binding Recognition}" TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Row="1" VerticalAlignment="Center" FontWeight="SemiBold" Text="{Binding Translation}" TextWrapping="Wrap"/>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <AppBarButton IsEnabled="{Binding IsListeningForSpeech}" Command="{Binding StopSpeechListenerCommand}" LabelPosition="Collapsed" Icon="Stop"/>
+                            <AppBarButton IsEnabled="{Binding IsListeningForSpeech, Converter={StaticResource BooleanToDisabledConverter}}" Command="{Binding StartSpeechListenerCommand}" LabelPosition="Collapsed" Icon="Play"/>
+                        </StackPanel>
+
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+
+            <ProgressRing Foreground="{ThemeResource AppMainBlueBrush}" IsEnabled="{Binding IsBusy}" IsActive="{Binding IsBusy}" Grid.RowSpan="2" Width="100" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        </Grid>
+
+
+        <!--  Adaptive triggers  -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="740"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="wideTitleLabel.Margin"
+                                Value="20,20" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="narrowTitleLabel.Margin"
+                                Value="50,20" />
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0,20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

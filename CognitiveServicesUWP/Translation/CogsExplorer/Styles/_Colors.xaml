@@ -1,0 +1,11 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="AppMainBlueColor">#FF0072C6</Color>
+    <SolidColorBrush x:Key="AppMainBlueBrush" Color="{ThemeResource AppMainBlueColor}"/>
+
+    <Color x:Key="AppMainGreyColor">#FF555555</Color>
+    <SolidColorBrush x:Key="AppMainGreyBrush" Color="{ThemeResource AppMainGreyColor}"/>
+    
+</ResourceDictionary>

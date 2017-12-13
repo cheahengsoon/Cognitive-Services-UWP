@@ -1,0 +1,285 @@
+﻿<Page
+    x:Class="CogsExplorer.Modules.Face.Views.StartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CogsExplorer.Modules.LUIS.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Add" Icon="Add" Click="OnDetectFacesClick" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TitleRow" Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="Face"
+                x:Name="wideTitleLabel"
+                Style="{StaticResource PageTitleStyle}" />
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="FACE"
+                x:Name="narrowTitleLabel"
+                Style="{StaticResource SmallPageTitleStyle}" />
+
+        <Grid x:Name="mainGrid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment="Left" Margin="0" Text="Use Face API methods to experiment with face detection and recognition." Style="{ThemeResource BodyTextStyle}"/>
+
+            <Pivot Grid.Row="1">
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="detection"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.ColumnSpan="2" FontWeight="SemiLight" HorizontalAlignment="Left" Margin="0,0,0,10" Text="Tap add image to select an image to use when performing face detection." Style="{ThemeResource BodyTextStyle}"/>
+
+                        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Height="{Binding CurrentImage.ImageHeight}" Width="{Binding CurrentImage.ImageWidth}">
+
+                            <Canvas x:Name="detectionCanvas" Width="{Binding CurrentImage.ImageWidth}" Height="{Binding CurrentImage.ImageHeight}">
+                                <Rectangle Width="{Binding CurrentImage.ImageWidth}" Height="{Binding CurrentImage.ImageHeight}" StrokeDashArray="4 4" Stroke="DarkGray" StrokeThickness="2"/>
+                                <Image Source="{Binding CurrentImage.Url}" Stretch="None"/>
+                                <Border BorderThickness="1" BorderBrush="DarkGray" Width="{Binding CurrentImage.ImageWidth}" Height="{Binding CurrentImage.ImageHeight}" />
+                            </Canvas>
+
+                            <Grid Visibility="{Binding CurrentImage, Converter={StaticResource HasContextToVisibilityConverter},FallbackValue=Collapsed}" Background="#B2000000" RequestedTheme="Dark" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+                                    <AppBarButton  IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanToDisabledConverter}}" Label="Detect Faces" Command="{Binding CurrentImage.DetectFacesCommand}">
+                                        <AppBarButton.Icon>
+                                            <FontIcon Glyph="&#xE8D4;"/>
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
+                                </StackPanel>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid Visibility="{Binding CurrentImage.SelectedFace, Converter={StaticResource HasContextToVisibilityConverter},FallbackValue=Collapsed}" Margin="40" Grid.Row="1" Grid.Column="1">
+                            <StackPanel>
+                                <TextBlock Style="{ThemeResource BodyTextStyle}" Text="estimated age"/>
+                                <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentImage.SelectedFace.Age}"/>
+                                <TextBlock Style="{ThemeResource BodyTextStyle}" Text="hair color"/>
+                                <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentImage.SelectedFace.HairColor}"/>
+                                <TextBlock Style="{ThemeResource BodyTextStyle}" Text="is smiling?"/>
+                                <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentImage.SelectedFace.IsSmiling}"/>
+                                <TextBlock Style="{ThemeResource BodyTextStyle}" Text="is wearing glasses?"/>
+                                <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentImage.SelectedFace.IsWearingGlasses}"/>
+                                <TextBlock Style="{ThemeResource BodyTextStyle}" Text="is wearing make up?"/>
+                                <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentImage.SelectedFace.IsWearingMakeup}"/>
+                                <TextBlock Style="{ThemeResource BodyTextStyle}" Text="has facial hair?"/>
+                                <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentImage.SelectedFace.HasFacialHair}"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                    </Grid>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="recognition"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        
+                        <TextBlock Grid.ColumnSpan="2" FontWeight="SemiLight" HorizontalAlignment="Left" Margin="0,0,0,10" Text="Tap add image to select an image to use when performing face recognition and matching." Style="{ThemeResource BodyTextStyle}"/>
+
+                        <Grid Grid.Row="1" Margin="10,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />                                 
+                            </Grid.RowDefinitions>
+                            <TextBlock Opacity="0.4" Style="{ThemeResource SubheaderTextBlockStyle}" Text="people groups" />
+                            <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal">
+                                <ComboBox Width="300" ItemsSource="{Binding CurrentPersonGroups}" SelectedItem="{Binding SelectedPersonGroup, Mode=TwoWay}">
+                                    <i:Interaction.Behaviors>
+                                        <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                            <ic:InvokeCommandAction Command="{Binding RefreshPersonsCommand}"/>
+                                        </ic:EventTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="18" VerticalAlignment="Center" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                                <TextBlock FontWeight="Light" Margin="5,0" VerticalAlignment="Center" Text="{Binding DisplayName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>                                      
+                                </ComboBox>
+                                <Button Style="{ThemeResource CleanButtonStyle}" Margin="5,0,0,5" VerticalAlignment="Bottom">
+                                    <Button.Flyout>
+                                        <Flyout Opening="OnCreatePersonGroupOpening">                                            
+                                            <StackPanel Width="200">
+                                                <TextBox Text="{Binding SelectedPersonGroup.DisplayName, Mode=TwoWay}" PlaceholderText="enter a group name" Header="Group name:"/>
+                                                <Button Command="{Binding SavePersonGroupCommand}" HorizontalAlignment="Right" Margin="0,5" Content="Create"/>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Right" Margin="60,0" Orientation="Horizontal" Grid.Row="2">
+                                <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" VerticalAlignment="Center" Text="(not trained)"/>
+                                <Button VerticalAlignment="Center" Margin="0,5" Click="OnTrainClick" Style="{ThemeResource CleanButtonStyle}" >
+                                    <TextBlock FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                </Button>
+                            </StackPanel>
+                            
+                            <TextBlock Opacity="0.4" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="0" Text="people" Grid.Row="3" />
+                            <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                <ListView ItemsSource="{Binding CurrentPersons}" SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" BorderBrush="DarkGray" BorderThickness="1" VerticalAlignment="Top" Height="160" Width="300" >
+                                    <i:Interaction.Behaviors>
+                                        <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                            <ic:InvokeCommandAction Command="{Binding RefreshPersonCommand}"/>
+                                        </ic:EventTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="18" VerticalAlignment="Center" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                                <TextBlock FontWeight="Light" Margin="5,0" VerticalAlignment="Center" Text="{Binding DisplayName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <Button Style="{ThemeResource CleanButtonStyle}" Margin="5,0" VerticalAlignment="Top">
+                                    <Button.Flyout>
+                                        <Flyout Opening="OnCreatePersonOpening">
+                                            <StackPanel Width="200">
+                                                <TextBox Text="{Binding SelectedPerson.DisplayName, Mode=TwoWay}" PlaceholderText="enter a person name" Header="Person name:"/>
+                                                <Button Command="{Binding SavePersonCommand}" HorizontalAlignment="Right" Margin="0,5" Content="Create"/>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                </Button>
+                            </StackPanel>
+
+                            <TextBlock Opacity="0.4" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="0" Text="faces" Grid.Row="5" />
+
+                            <StackPanel Grid.Row="6" Orientation="Horizontal">
+                                <GridView VerticalAlignment="Top" BorderBrush="DarkGray" BorderThickness="1" ItemsSource="{Binding SelectedPerson.FaceUrls}" Height="300" Width="300">
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Margin="5,0" Stretch="UniformToFill" Width="120" Height="120" Source="{Binding}"></Image>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+
+                                <StackPanel Margin="5,0" VerticalAlignment="Top">
+                                    <Button Margin="0,5" Click="OnAddFaceClick" Style="{ThemeResource CleanButtonStyle}" >
+                                        <TextBlock FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                    </Button>                                    
+                                </StackPanel>
+                                
+                                
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="40,80" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1">
+                            <StackPanel Width="420">
+                                <TextBlock Opacity="0.4" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="0" Text="identify a person" Grid.Row="4" />
+
+                                <Grid Width="410" Height="410">
+                                    <Rectangle StrokeDashArray="4 4" Stroke="Gray" StrokeThickness="1"/>
+                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center"  Stretch="None" Source="{Binding CurrentImage.Url}"/>
+                                    <Border RequestedTheme="Dark" VerticalAlignment="Bottom" Background="{ThemeResource AppMainBlueBrush}">
+                                        <TextBlock Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding IdentifiedPerson.DisplayName}"/>
+                                    </Border>
+                                </Grid>
+
+                                <Button HorizontalAlignment="Right" Click="OnIndentifyFaceClick" Style="{ThemeResource CleanButtonStyle}" Margin="5" VerticalAlignment="Top">
+                                    <TextBlock FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text=""/>
+                                </Button>
+
+                                
+                            </StackPanel>
+                            
+                        </Grid>
+
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+
+            <ProgressRing Foreground="{ThemeResource AppMainBlueBrush}" IsEnabled="{Binding IsBusy}" IsActive="{Binding IsBusy}" Grid.RowSpan="2" Width="100" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+
+        </Grid>
+
+
+        <!--  Adaptive triggers  -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="740"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="wideTitleLabel.Margin"
+                                Value="20,20" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                        <Setter Target="narrowTitleLabel.Margin"
+                                Value="50,20" />
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0,20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{D88C956E-32B1-4EB2-8075-7A140275C885}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CogsExplorer</RootNamespace>
+    <AssemblyName>CogsExplorer</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <PackageCertificateKeyFile>CogsExplorer_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>EC8F6DF568021D46EDFA998C4870B5FAFFDCEB05</PackageCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <!-- Nuget package references -->
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>1.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
+      <Version>1.0.0.5</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-us\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activation\ActivationHandler.cs" />
+    <Compile Include="Common\CoreConstants.cs" />
+    <Compile Include="Converters\CoreConverters.cs" />
+    <Compile Include="Helpers\ThemeHelper.cs" />
+    <Compile Include="Helpers\Json.cs" />
+    <Compile Include="Common\ObservableBase.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\SettingsStorageExtensions.cs" />
+    <Compile Include="Models\ServiceInformation.cs" />
+    <Compile Include="Modules\ComputerVision\Classes\HandwritingAnalysisResult.cs" />
+    <Compile Include="Modules\ComputerVision\Classes\HandwritingOperationResult.cs" />
+    <Compile Include="Modules\ComputerVision\Classes\ImageAnalysisResult.cs" />
+    <Compile Include="Modules\ComputerVision\Classes\OcrAnalysisResult.cs" />
+    <Compile Include="Modules\ComputerVision\Common\CoreConstants.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Modules\ComputerVision\Helpers\ImageHelper.cs" />
+    <Compile Include="Modules\ComputerVision\Helpers\StorageHelper.cs" />
+    <Compile Include="Modules\ComputerVision\Models\ImageInformation.cs" />
+    <Compile Include="Modules\ComputerVision\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Modules\ComputerVision\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Emotion\Classes\DetectOperationResult.cs" />
+    <Compile Include="Modules\Emotion\Classes\DocumentKeyPhrasesResult.cs" />
+    <Compile Include="Modules\Emotion\Classes\DocumentLanguageResult.cs" />
+    <Compile Include="Modules\Emotion\Classes\DocumentSentimentResult.cs" />
+    <Compile Include="Modules\Emotion\Classes\DocumentsInfo.cs" />
+    <Compile Include="Modules\Emotion\Classes\ImageAnalysisResult.cs" />
+    <Compile Include="Modules\Emotion\Classes\NewsResult.cs" />
+    <Compile Include="Modules\Emotion\Classes\TopicDocumentsInfo.cs" />
+    <Compile Include="Modules\Emotion\Common\CoreConstants.cs" />
+    <Compile Include="Modules\Emotion\Helpers\EmotionHelper.cs" />
+    <Compile Include="Modules\Emotion\Helpers\NewsHelper.cs" />
+    <Compile Include="Modules\Emotion\Helpers\StorageHelper.cs" />
+    <Compile Include="Modules\Emotion\Helpers\TextAnalyticsHelper.cs" />
+    <Compile Include="Modules\Emotion\Models\DocumentSentimentInformation.cs" />
+    <Compile Include="Modules\Emotion\Models\EmotionScoreInformation.cs" />
+    <Compile Include="Modules\Emotion\Models\FaceInformation.cs" />
+    <Compile Include="Modules\Emotion\Models\ImageInformation.cs" />
+    <Compile Include="Modules\Emotion\Models\LanguageInformation.cs" />
+    <Compile Include="Modules\Emotion\Models\NewsInformation.cs" />
+    <Compile Include="Modules\Emotion\ViewModels\ServicesViewModel.cs" />
+    <Compile Include="Modules\Emotion\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Face\Classes\FaceDetectionResult.cs" />
+    <Compile Include="Modules\Face\Classes\FaceListResult.cs" />
+    <Compile Include="Modules\Face\Classes\IdentifyResult.cs" />
+    <Compile Include="Modules\Face\Classes\PersonGroupResult.cs" />
+    <Compile Include="Modules\Face\Classes\PersonResult.cs" />
+    <Compile Include="Modules\Face\Classes\TrainOperationResult.cs" />
+    <Compile Include="Modules\Face\Common\CoreConstants.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
+    <Compile Include="Modules\Face\Helpers\DetectionHelper.cs" />
+    <Compile Include="Modules\Face\Helpers\RecognitionHelper.cs" />
+    <Compile Include="Modules\Face\Helpers\StorageHelper.cs" />
+    <Compile Include="Modules\Face\Helpers\UtilitiesHelper.cs" />
+    <Compile Include="Modules\Face\Models\FaceInformation.cs" />
+    <Compile Include="Modules\Face\Models\ImageInformation.cs" />
+    <Compile Include="Modules\Face\Models\PersonGroupInformation.cs" />
+    <Compile Include="Modules\Face\Models\PersonInformation.cs" />
+    <Compile Include="Modules\Face\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Modules\Face\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\LUIS\Classes\AnswerResult.cs" />
+    <Compile Include="Modules\LUIS\Classes\IntentionResult.cs" />
+    <Compile Include="Modules\LUIS\Common\CoreConstants.cs" />
+    <Compile Include="Modules\LUIS\Helpers\AnswerHelper.cs" />
+    <Compile Include="Modules\LUIS\Models\ConversationItem.cs" />
+    <Compile Include="Modules\LUIS\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Modules\LUIS\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Search\Classes\EntityResult.cs" />
+    <Compile Include="Modules\Search\Classes\ImageSearchResult.cs" />
+    <Compile Include="Modules\Search\Classes\NewsResult.cs" />
+    <Compile Include="Modules\Search\Classes\SuggestionResult.cs" />
+    <Compile Include="Modules\Search\Classes\VideoSearchResult.cs" />
+    <Compile Include="Modules\Search\Classes\WebResult.cs" />
+    <Compile Include="Modules\Search\Common\CoreConstants.cs" />
+    <Compile Include="Modules\Search\Common\CoreEnums.cs" />
+    <Compile Include="Modules\Search\Helpers\SearchHelper.cs" />
+    <Compile Include="Modules\Search\Models\ConversationItem.cs" />
+    <Compile Include="Modules\Search\Models\EntityInformation.cs" />
+    <Compile Include="Modules\Search\Models\ImageInformation.cs" />
+    <Compile Include="Modules\Search\Models\NewsInformation.cs" />
+    <Compile Include="Modules\Search\Models\PlaceInformation.cs" />
+    <Compile Include="Modules\Search\Models\VideoInformation.cs" />
+    <Compile Include="Modules\Search\Models\WebInformation.cs" />
+    <Compile Include="Modules\Search\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Modules\Search\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Translation\Classes\DecipherResult.cs" />
+    <Compile Include="Modules\Translation\Classes\SpeechLanguageResult.cs" />
+    <Compile Include="Modules\Translation\Common\CoreConstants.cs" />
+    <Compile Include="Modules\Translation\Common\CoreEnums.cs" />
+    <Compile Include="Modules\Translation\Helpers\SpeechHelper.cs" />
+    <Compile Include="Modules\Translation\Helpers\SpeechListener.cs" />
+    <Compile Include="Modules\Translation\Helpers\SpeechTranslationHelper.cs" />
+    <Compile Include="Modules\Translation\Helpers\TranslationHelper.cs" />
+    <Compile Include="Modules\Translation\Models\LanguageInformation.cs" />
+    <Compile Include="Modules\Translation\Models\SpeechLanguageInformation.cs" />
+    <Compile Include="Modules\Translation\Models\SpeechTranslationInformation.cs" />
+    <Compile Include="Modules\Translation\Models\SpeechVoiceInformation.cs" />
+    <Compile Include="Modules\Translation\Models\TranslationInformation.cs" />
+    <Compile Include="Modules\Translation\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Modules\Translation\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\VideoIndexer\Classes\SearchResult.cs" />
+    <Compile Include="Modules\VideoIndexer\Classes\VideoBreakdownResult.cs" />
+    <Compile Include="Modules\VideoIndexer\Classes\VideoUploadStatusInfo.cs" />
+    <Compile Include="Modules\VideoIndexer\Common\CoreConstants.cs" />
+    <Compile Include="Modules\VideoIndexer\Common\CoreEnums.cs" />
+    <Compile Include="Modules\VideoIndexer\Helpers\BreakdownHelper.cs" />
+    <Compile Include="Modules\VideoIndexer\Helpers\PickerHelper.cs" />
+    <Compile Include="Modules\VideoIndexer\Helpers\TranscriptHelper.cs" />
+    <Compile Include="Modules\VideoIndexer\Helpers\UploadHelper.cs" />
+    <Compile Include="Modules\VideoIndexer\Models\InsightInformation.cs" />
+    <Compile Include="Modules\VideoIndexer\Models\SearchResultInformation.cs" />
+    <Compile Include="Modules\VideoIndexer\Models\VideoInformation.cs" />
+    <Compile Include="Modules\VideoIndexer\Models\VideoUploadStatusInformation.cs" />
+    <Compile Include="Modules\VideoIndexer\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Modules\VideoIndexer\Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ActivationService.cs" />
+    <Compile Include="Activation\DefaultLaunchActivationHandler.cs" />
+    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\OnBackgroundEnteringEventArgs.cs" />
+    <Compile Include="Services\SuspendAndResumeService.cs" />
+    <Compile Include="Services\SuspensionState.cs" />
+    <Compile Include="Services\ThemeSelectorService.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\ShellNavigationItem.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellPage.xaml.cs">
+      <DependentUpon>ShellPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Modules\ComputerVision\Views\StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Emotion\Views\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Face\Views\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\LUIS\Views\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Search\Views\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Translation\Views\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\VideoIndexer\Views\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AppStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\CommandsAndConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\_Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\_FontSizes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\_Thickness.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ShellPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\ResourceExtensions.cs" />
+    <Compile Include="Helpers\Singleton.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\AppIcon.scale-100.png" />
+    <Content Include="Assets\AppIcon.scale-200.png" />
+    <Content Include="Assets\LargeTile.scale-100.png" />
+    <Content Include="Assets\LargeTile.scale-200.png" />
+    <Content Include="Assets\map.png" />
+    <None Include="CogsExplorer_StoreKey.pfx" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\MediumTile.scale-100.png" />
+    <Content Include="Assets\MediumTile.scale-200.png" />
+    <Content Include="Assets\SmallTile.scale-100.png" />
+    <Content Include="Assets\SmallTile.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\PackageLogo.scale-100.png" />
+    <Content Include="Assets\PackageLogo.scale-200.png" />
+    <Content Include="Assets\WideTile.scale-100.png" />
+    <Content Include="Assets\WideTile.scale-200.png" />
+    <Content Include="Images\Icons\CustomVision.png" />
+    <Content Include="Images\Icons\ComputerVision.png" />
+    <Content Include="Images\Icons\Cuzco.png" />
+    <Content Include="Images\Icons\Emotion.png" />
+    <Content Include="Images\Icons\Face.png" />
+    <Content Include="Images\Icons\Luis.png" />
+    <Content Include="Images\Icons\Search.png" />
+    <Content Include="Images\Icons\Translator.png" />
+    <Content Include="Images\Icons\VideoIndexer.png" />
+    <Content Include="Images\Icons\Wollongong.png" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="CogsExplorer_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

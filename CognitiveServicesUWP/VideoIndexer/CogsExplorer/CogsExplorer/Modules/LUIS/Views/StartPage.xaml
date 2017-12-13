@@ -1,0 +1,109 @@
+﻿<Page
+    x:Class="CogsExplorer.Modules.LUIS.Views.StartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CogsExplorer.Modules.LUIS.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Add" Icon="Add" Click="AppBarButton_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TitleRow" Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="LUIS &amp; QnA Maker"
+                x:Name="wideTitleLabel"
+                Style="{StaticResource PageTitleStyle}" />
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="LUIS &amp; QNA MAKER"
+                x:Name="narrowTitleLabel"
+                Style="{StaticResource SmallPageTitleStyle}" />
+
+        <Grid x:Name="mainGrid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment="Left" Margin="0" Text="Use LUIS and QnA Maker methods to experiment with language understanding." Style="{ThemeResource BodyTextStyle}"/>
+
+            <ListView VerticalAlignment="Bottom" Margin="0,20,0,0" HorizontalAlignment="Center" Width="400" Grid.Row="1" DataContext="{Binding}" ItemsSource="{Binding Conversation}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,5" RequestedTheme="Dark" Background="{Binding IsBot, Converter={StaticResource ConversationBackgroundConverter}}">
+                            <Grid Margin="10">
+                                <TextBlock Width="340" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" Margin="10" FontWeight="SemiLight" Text="{Binding Content}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid HorizontalAlignment="Center" Width="420" Margin="30,0,0,20"  Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition  Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding CurrentQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" PlaceholderText="start typing a question" />
+                <AppBarButton VerticalAlignment="Center" Grid.Column="1" IsCompact="True" LabelPosition="Collapsed" Icon="Send" Command="{Binding SendQuestionCommand}"/>
+            </Grid>
+
+            <ProgressRing Foreground="{ThemeResource AppMainBlueBrush}" IsEnabled="{Binding IsBusy}" IsActive="{Binding IsBusy}" Grid.RowSpan="2" Width="100" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        </Grid>
+
+
+        <!--  Adaptive triggers  -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="740"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="wideTitleLabel.Margin"
+                                Value="20,20" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                        <Setter Target="narrowTitleLabel.Margin"
+                                Value="50,20" />
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0,20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

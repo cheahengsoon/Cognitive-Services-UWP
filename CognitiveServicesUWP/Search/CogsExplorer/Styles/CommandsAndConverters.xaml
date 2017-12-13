@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:CogsExplorer.Converters">
+
+    <converters:ListToLabelConverter x:Key="ListToLabelConverter"/>
+    <converters:UrlToPathConverter x:Key="UrlToPathConverter"/>
+    <converters:HasTagsToVisibilityConverter x:Key="HasTagsToVisibilityConverter"/>
+    <converters:BooleanToDisabledConverter x:Key="BooleanToDisabledConverter"/>
+    <converters:NumberToPercentageConverter x:Key="NumberToPercentageConverter"/>
+    <converters:HasContextToVisibilityConverter x:Key="HasContextToVisibilityConverter"/>
+    <converters:SentimentScoreToFillConverter x:Key="SentimentScoreToFillConverter"/>
+    <converters:SentimentScoreToWidthConverter x:Key="SentimentScoreToWidthConverter"/>
+    <converters:HasItemsToVisibilityConverter x:Key="HasItemsToVisibilityConverter"/>
+    <converters:EmotionScoreLabelConverter x:Key="EmotionScoreLabelConverter"/>
+    <converters:ConversationBackgroundConverter x:Key="ConversationBackgroundConverter"/>
+    <converters:DateTimeLabelConverter x:Key="DateTimeLabelConverter"/>
+    
+</ResourceDictionary>

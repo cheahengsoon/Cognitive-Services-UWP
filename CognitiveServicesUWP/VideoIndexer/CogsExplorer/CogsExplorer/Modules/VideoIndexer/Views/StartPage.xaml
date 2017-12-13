@@ -1,0 +1,179 @@
+﻿<Page
+    x:Class="CogsExplorer.Modules.VideoIndexer.Views.StartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CogsExplorer.Modules.VideoIndexer.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Add" Icon="Add" Command="{Binding UploadVideoCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TitleRow" Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="Video Indexer"
+                x:Name="wideTitleLabel"
+                Style="{StaticResource PageTitleStyle}" />
+
+        <TextBlock VerticalAlignment="Top"
+                Grid.Row="0"     
+                Text="VIDEO INDEXER"
+                x:Name="narrowTitleLabel"
+                Style="{StaticResource SmallPageTitleStyle}" />
+
+        <Grid x:Name="mainGrid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment="Left" Margin="0" Text="Use Video Indexer to extract the insights from your videos using artificial intelligence technologies." Style="{ThemeResource BodyTextStyle}"/>
+
+            <Pivot Grid.Row="1">
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="upload"/>
+                    </PivotItem.Header>
+                    <Grid VerticalAlignment="Top" Margin="20" HorizontalAlignment="Left" Width="600">
+
+                        <StackPanel HorizontalAlignment="Left">
+                            <TextBlock FontWeight="SemiLight" HorizontalAlignment="Left" Margin="0,0,0,10" Text="Select a video to begin analysis and indexing." Style="{ThemeResource BodyTextStyle}"/>
+                            <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding CurrentVideo.DisplayName}"/>
+                            <ProgressBar Height="20" Visibility="{Binding IsProcessing,Converter={StaticResource BooleanToVisiblityConverter}}" Minimum="0" Maximum="100" Value="{Binding CurrentUploadStatus.PercentageComplete}" IsEnabled="{Binding IsProcessing}" Foreground="{ThemeResource AppMainBlueBrush}"/>
+                            <Image HorizontalAlignment="Left" Stretch="UniformToFill" Width="300" Source="{Binding CurrentInsights.ThumbnailUrl}"/>
+                       
+
+                        <SearchBox Visibility="{Binding CurrentInsights.Topics.Count, Converter={StaticResource HasItemsToVisibilityConverter}}" Margin="0,20" HorizontalAlignment="Left" PlaceholderText="enter a search" Width="300" QueryText="{Binding SearchQuery, Mode=TwoWay}">
+                                <i:Interaction.Behaviors>
+                                    <ic:EventTriggerBehavior EventName="QuerySubmitted">
+                                        <ic:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                                    </ic:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                            </SearchBox> 
+
+                            <ListView Margin="0,20" Height="400" HorizontalAlignment="Left" ItemsSource="{Binding SearchResults}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock FontWeight="SemiLight" Style="{ThemeResource CaptionTextBlockStyle}" Text="{Binding StartTime}"/>
+                                            <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding Text}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        <ProgressRing Foreground="{ThemeResource AppMainBlueBrush}" IsEnabled="{Binding IsBusy}" IsActive="{Binding IsBusy}" Width="100" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                       
+                    </Grid>
+
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="insights"/>
+                    </PivotItem.Header>
+                    <Grid VerticalAlignment="Top" Margin="20" HorizontalAlignment="Left" Width="600">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock FontWeight="SemiLight" HorizontalAlignment="Left" Margin="0,0,0,10" Text="The following insights are available for this video." Style="{ThemeResource BodyTextStyle}"/>
+
+                        <StackPanel Grid.Row="1">
+                            <TextBlock FontWeight="SemiBold" Style="{ThemeResource TitleTextStyle}" Text="faces"/>
+                            <GridView Height="240" ItemsSource="{Binding CurrentInsights.Faces}">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image ToolTipService.ToolTip="{Binding DisplayName}" Margin="5" Width="100" Stretch="Uniform" Source="{Binding ThumbnailUrl}"/>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                        </StackPanel>
+                        <StackPanel Margin="0,20" Grid.Row="2">
+                            <TextBlock FontWeight="SemiBold" Style="{ThemeResource TitleTextStyle}" Text="topics"/>
+                            <ItemsControl ItemsSource="{Binding CurrentInsights.Topics}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="SemiBold" Style="{ThemeResource BodyTextStyle}" Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                    </Grid>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Text="transcript"/>
+                    </PivotItem.Header>
+                    <Grid VerticalAlignment="Top" Margin="20" HorizontalAlignment="Left" Width="600">
+
+                        <StackPanel HorizontalAlignment="Left">
+                            <TextBlock FontWeight="SemiLight" HorizontalAlignment="Left" Margin="0,0,0,10" Text="The following transcript is available for this video." Style="{ThemeResource BodyTextStyle}"/>
+                            <TextBox IsReadOnly="True" Text="{Binding CurrentTtsContent}" TextWrapping="Wrap" Width="500" AcceptsReturn="True" Height="400"/>
+                        </StackPanel>
+
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+
+          
+
+        </Grid>
+
+
+        <!--  Adaptive triggers  -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="740"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="wideTitleLabel.Margin"
+                                Value="20,20" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="narrowTitleLabel.Margin"
+                                Value="50,20" />
+                        <Setter Target="wideTitleLabel.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="narrowTitleLabel.Visibility"
+                                Value="Visible" />
+                        <Setter Target="mainGrid.Margin"
+                                Value="20,0,20,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>
